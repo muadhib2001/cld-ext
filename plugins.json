@@ -1,0 +1,42 @@
+[
+    {
+        "url": "https://raw.githubusercontent.com/muadhib2001/cld-ext/builds/AnimeSama.cs3",
+        "status": 1,
+        "version": 7,
+        "name": "AnimeSama",
+        "internalName": "AnimeSama",
+        "authors": [
+            "sarem"
+        ],
+        "description": "Anime-Sama est un site de r\u00e9f\u00e9rencement et de catalogage, cr\u00e9\u00e9 par des passionn\u00e9s de l\u2019animation et du divertissement APAC.",
+        "fileSize": 19166,
+        "repositoryUrl": "https://github.com/muadhib2001/cld-ext",
+        "language": "fr",
+        "tvTypes": [
+            "Anime"
+        ],
+        "iconUrl": "https://cdn.statically.io/gh/Anime-Sama/IMG/img/autres/logo.png",
+        "apiVersion": 1,
+        "fileHash": "sha256-db7d49abf36d0ead780b3eb49929015e5edc5c5fa5c327dc1060094699123be8"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/muadhib2001/cld-ext/builds/Turkish.cs3",
+        "status": 1,
+        "version": 2,
+        "name": "Turkish",
+        "internalName": "Turkish",
+        "authors": [
+            "sarem"
+        ],
+        "fileSize": 14729,
+        "repositoryUrl": "https://github.com/muadhib2001/cld-ext",
+        "language": "tr",
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "iconUrl": "https://www.google.com/s2/favicons?domain=turkish123.com&sz=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-55d77f9bb2410afbe8c68aee07b141142f757421136739b75da05859a8f17c44"
+    }
+]
