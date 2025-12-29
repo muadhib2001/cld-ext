@@ -1,5 +1,7 @@
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 import com.android.build.gradle.BaseExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 buildscript {
     repositories {
@@ -57,13 +59,11 @@ subprojects {
         }
 
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            kotlinOptions {
-                jvmTarget = "1.8" // Required
-                // Disables some unnecessary features
-                freeCompilerArgs = freeCompilerArgs +
-                        "-Xno-call-assertions" +
-                        "-Xno-param-assertions" +
-                        "-Xno-receiver-assertions"
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_1_8)
+                freeCompilerArgs.add("-Xno-call-assertions")
+                freeCompilerArgs.add("-Xno-param-assertions")
+                freeCompilerArgs.add("-Xno-receiver-assertions")
             }
         }
     }
@@ -92,6 +92,6 @@ subprojects {
     }
 }
 
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
+tasks.register("clean") {
+    delete(rootProject.layout.buildDirectory)
 }

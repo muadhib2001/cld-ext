@@ -102,7 +102,7 @@ class Turkish : MainAPI() {
             this.year = year
             this.plot = description
             this.tags = tags
-            this.score = rating
+            this.score =  Score.from10(rating)
             this.duration = duration
             addActors(actors)
             this.recommendations = recommendations
@@ -133,9 +133,10 @@ class Turkish : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
 
-        val document = app.get(data).text
+         val document = app.get(data).document
+        /*val document = app.get(data).text
 
-        /*Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
+        Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
             .toList().apmap { link ->
                 if (link.startsWith(mainServer)) {
                     invokeLocalSource(link, callback)
