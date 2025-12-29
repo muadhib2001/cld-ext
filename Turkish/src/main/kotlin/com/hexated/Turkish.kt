@@ -72,19 +72,44 @@ class Turkish : MainAPI() {
         val description = document.select("p.f-desc").text().trim()
         val duration = document.selectFirst("div.mvici-right span[itemprop=duration]")?.text()
             ?.filter { it.isDigit() }?.toIntOrNull()
-        val rating = document.select("span.imdb-r").text().trim().toRatingInt()
+        //val rating = document.select("span.imdb-r").text().trim().toRatingInt()
+        val rating = document.select("span.imdb-r").text().trim().toFloat()()
         val actors = document.select("div.mvici-left p:contains(Actors:) a").map { it.text() }
 
         val recommendations = document.select("div.movies-list div.ml-item").mapNotNull {
             it.toSearchResult()
         }
 
-        val episodes = document.select("div.les-content a").map {
+        /*val episodes = document.select("div.les-content a").map {
             Episode(
                 it.attr("href"),
                 it.text(),
             )
+        }*/
+
+        val link = LinkData(
+                id = id,
+                type = "Series",
+                season = 0,
+                title = title,
+                year = year,
+            )
+       
+
+
+        val episodes = document.select("div.les-content a").map {
+              newEpisode(
+                link.toJson()
+            ) {
+                name = null
+                season = null
+                posterUrl = null
+                score = Score.from10(rating)
+                description = null
+                runTime = null
+            }
         }
+
         return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
             this.posterUrl = poster
             this.year = year
