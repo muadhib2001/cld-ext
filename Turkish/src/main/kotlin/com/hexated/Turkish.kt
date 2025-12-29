@@ -87,28 +87,15 @@ class Turkish : MainAPI() {
             )
         }*/
 
-        val link = LinkData(
-                id = id,
-                type = "Series",
-                season = 0,
-                title = title,
-                year = year,
-            )
-       
-
-
         val episodes = document.select("div.les-content a").map {
-              newEpisode(
-                link.toJson()
-            ) {
-                name = null
-                season = null
-                posterUrl = null
-                score = Score.from10(rating)
-                description = null
-                runTime = null
-            }
+            val name = it.text().trim()
+            val episode = Regex("(\\d+[.,]?\\d*)").find(name)?.groupValues?.getOrNull(0)
+                        ?.toIntOrNull()
+            val link = it.attr("href")
+            newEpisode(link) { this.episode = episode }
         }
+
+         
 
         return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
             this.posterUrl = poster
