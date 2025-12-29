@@ -147,14 +147,17 @@ class Turkish : MainAPI() {
 
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
-                val slist=Regex("<iframe\\s{0,}src=[\"|']((https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,}))[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                val slist=Regex("<iframe\\s{0,}src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
-                val link=slist.get(0)
-    
-                if (link.startsWith(mainServer)) {
-                    invokeLocalSource(link, callback)
-                } else {
-                    loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+
+                slist.forEach {
+                    val link=it
+        
+                    if (link.startsWith(mainServer)) {
+                        invokeLocalSource(link, callback)
+                    } else {
+                        loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                    }
                 }
             }
         return true
