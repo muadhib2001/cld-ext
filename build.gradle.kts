@@ -42,6 +42,9 @@ subprojects {
     }
 
     android {
+
+        namespace = "com.sarem"
+
         defaultConfig {
             minSdk = 21
             compileSdkVersion(35)
