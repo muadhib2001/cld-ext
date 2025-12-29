@@ -6,6 +6,13 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
+import android.content.DialogInterface
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.view.View
+import android.widget.Toast
+
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://turkish123.to"
@@ -147,6 +154,21 @@ class Turkish : MainAPI() {
 
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Title")
+                builder.setMessage(html)
+                builder.setPositiveButton("OK") { dialog, which ->
+                    Toast.makeText(applicationContext,
+                        android.R.string.yes, Toast.LENGTH_SHORT).show()
+                }
+                builder.setNegativeButton("Cancel") { dialog, which ->
+                    Toast.makeText(applicationContext,
+                        android.R.string.no, Toast.LENGTH_SHORT).show()
+}
+                }
+                val dialog = builder.create()
+                dialog.show()
+
                 val slist=Regex("<iframe[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
 
