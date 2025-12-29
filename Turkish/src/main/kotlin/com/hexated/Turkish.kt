@@ -146,7 +146,7 @@ class Turkish : MainAPI() {
             }*/
 
         document.select("iframe").amap { e ->
-                link=e.attr("src")
+                val link=e.attr("src")
                 if (link.startsWith(mainServer)) {
                     invokeLocalSource(link, callback)
                 } else {
