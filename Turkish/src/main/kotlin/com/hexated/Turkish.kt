@@ -149,9 +149,7 @@ class Turkish : MainAPI() {
                 val html=e.outerHtml()
                 val slist=Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
-                val link=""
-                if (size>0)
-                    val link=slist.get(0)
+                val link=slist.get(0)
     
                 if (link.startsWith(mainServer)) {
                     invokeLocalSource(link, callback)
