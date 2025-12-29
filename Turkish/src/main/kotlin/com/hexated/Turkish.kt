@@ -151,7 +151,7 @@ class Turkish : MainAPI() {
                 val size = slist.size
                 val link=""
                 if (size>0)
-                    link=slist.get(0)
+                    val link=slist.get(0)
     
                 if (link.startsWith(mainServer)) {
                     invokeLocalSource(link, callback)
