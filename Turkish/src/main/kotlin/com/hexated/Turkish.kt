@@ -1,4 +1,4 @@
-package com.hexated
+package com.sarem
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
 
 class Turkish : MainAPI() {
-    override var mainUrl = "https://turkish123.com"
+    override var mainUrl = "https://www1.turkish123.info"
     override var name = "Turkish123"
     override val hasMainPage = true
     override var lang = "tr"
