@@ -73,7 +73,7 @@ class Turkish : MainAPI() {
         val duration = document.selectFirst("div.mvici-right span[itemprop=duration]")?.text()
             ?.filter { it.isDigit() }?.toIntOrNull()
         //val rating = document.select("span.imdb-r").text().trim().toRatingInt()
-        val rating = document.select("span.imdb-r").text().trim().toFloat()()
+        val rating = document.select("span.imdb-r").text().trim().toFloat()
         val actors = document.select("div.mvici-left p:contains(Actors:) a").map { it.text() }
 
         val recommendations = document.select("div.movies-list div.ml-item").mapNotNull {
@@ -102,7 +102,7 @@ class Turkish : MainAPI() {
             this.year = year
             this.plot = description
             this.tags = tags
-            this.rating = rating
+            this.score = rating
             this.duration = duration
             addActors(actors)
             this.recommendations = recommendations
@@ -135,15 +135,22 @@ class Turkish : MainAPI() {
 
         val document = app.get(data).text
 
-        Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
+        /*Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
             .toList().apmap { link ->
                 if (link.startsWith(mainServer)) {
                     invokeLocalSource(link, callback)
                 } else {
                     loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                 }
-            }
+            }*/
 
+        document.select("iframe").amap { link ->
+                if (link.startsWith(mainServer)) {
+                    invokeLocalSource(link, callback)
+                } else {
+                    loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                }
+            }
         return true
 
     }
