@@ -6,7 +6,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://turkish123.to"
@@ -148,14 +148,9 @@ class Turkish : MainAPI() {
 
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
-                val alertDialogBuilder = AlertDialog.Builder(this)
-                alertDialogBuilder.setTitle("Exit App")
-                alertDialogBuilder.setMessage(html)
-                alertDialogBuilder.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
-                    finish()
-                }
-                alertDialogBuilder.setNegativeButton("Cancel", { dialogInterface: DialogInterface, i: Int -> })
-                alertDialog = alertDialogBuilder.create()
+                val duration = Toast.LENGTH_SHORT
+val toast = Toast.makeText(this, html, duration) // in Activity
+toast.show()
                 val slist=Regex("<iframe[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
 
