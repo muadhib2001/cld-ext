@@ -147,7 +147,7 @@ class Turkish : MainAPI() {
 
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
-                val slist=Regex("<iframe\\s{0,}src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                val slist=Regex("<iframe[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
 
                 slist.forEach {
