@@ -145,9 +145,9 @@ class Turkish : MainAPI() {
                 }
             }*/
 
-        document.select("div#tab2 .movieplay").amap { e ->
+        document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
-                val slist=Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(html).map { it.groupValues[1] }.toList()
+                val slist=Regex("<iframe\\s{0,}src=[\"|']((https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,}))[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
                 val link=slist.get(0)
     
