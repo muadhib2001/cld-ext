@@ -93,6 +93,7 @@ class Turkish : MainAPI() {
             val episode = Regex("(\\d+[.,]?\\d*)").find(name)?.groupValues?.getOrNull(0)
                         ?.toIntOrNull()
             val link = it.attr("href")
+            Log.i("#sarem load#",link)
             newEpisode(link) { this.episode = episode }
         }
 
@@ -115,7 +116,7 @@ class Turkish : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ) {
         val document = app.get(url, referer = "$mainUrl/").text
-
+        Log.i("#sarem invokeLocalSource#",url)
         Regex("var\\surlPlay\\s=\\s[\"|'](\\S+)[\"|'];").find(document)?.groupValues?.get(1)
             ?.let { link ->
                 M3u8Helper.generateM3u8(
@@ -152,11 +153,11 @@ class Turkish : MainAPI() {
                 //Log.i("#sarem", html);
                 val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                val size = slist.size
-                Log.i("#sarem222222#",slist.joinToString())
+                //val size = slist.size
+                
                 slist.forEach {
                     val link=it
-        
+                    Log.i("#sarem loadLinks#",link)
                     if (link.startsWith(mainServer)) {
                         invokeLocalSource(link, callback)
                     } else {
