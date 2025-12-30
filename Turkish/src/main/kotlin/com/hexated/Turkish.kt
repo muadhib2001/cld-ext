@@ -150,7 +150,7 @@ class Turkish : MainAPI() {
                 val html=e.outerHtml()
                 
                 Log.i("#sarem", html);
-                //val slist=Regex("<iframe[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                //val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
                 Log.i("#sarem222222#",slist.joinToString())
