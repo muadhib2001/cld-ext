@@ -154,9 +154,9 @@ class Turkish : MainAPI() {
                 val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 //val size = slist.size
-                
-                slist.forEach {
-                    val link=it
+                Log.i("#sarem", slist.joinToString());
+
+                for (link in slist) {
                     Log.i("#sarem loadLinks#",link)
                     if (link.startsWith(mainServer)) {
                         invokeLocalSource(link, callback)
@@ -164,6 +164,15 @@ class Turkish : MainAPI() {
                         loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                     }
                 }
+                /*slist.forEach {
+                    val link=it
+                    Log.i("#sarem loadLinks#",link)
+                    if (link.startsWith(mainServer)) {
+                        invokeLocalSource(link, callback)
+                    } else {
+                        loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                    }
+                }*/
             }
         return true
 
