@@ -1,6 +1,6 @@
 {
-    "name": "Turkish Providers Repository | @Samer",
-    "description": "Türkçe içerikli eklenti havuzu",
+    "name": "SAREM Providers Repository | @Samer",
+    "description": "SAREM plugins",
     "manifestVersion": 1,
     "pluginLists": [
       "https://raw.githubusercontent.com/muadhib2001/cld-ext/builds/plugins.json"
