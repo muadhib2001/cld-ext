@@ -6,7 +6,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
-import android.widget.Toast
+import io.tarif.toastcompat.ktx.ToastCompat
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://turkish123.to"
@@ -148,9 +148,26 @@ class Turkish : MainAPI() {
 
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
-                val duration = Toast.LENGTH_SHORT
-val toast = Toast.makeText(this, html, duration) // in Activity
-toast.show()
+                
+                val builder = ToastCompat.Builder(this)
+                .backgroundType(ToastCompat.SOLID)
+                .backgroundColor(Color.BLACK)
+                .text(html)
+                .textBold()
+                .textColor(Color.WHITE)
+                .textSize(14f)
+                .textBold()
+                .font(R.font.marko_one)
+                .stroke(1,Color.GREEN)
+                .iconEnd(R.drawable.ic_baseline_circle_notifications_24)
+                .iconStart(R.drawable.ic_baseline_circle_notifications_24)
+                .iconSize(33)
+                .gravity(ToastCompat.GRAVITY_CENTER)
+                .padding(25f,30f,30f)
+                .build()
+
+                builder.show()
+
                 val slist=Regex("<iframe[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 val size = slist.size
 
