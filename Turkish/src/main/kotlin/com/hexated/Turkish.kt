@@ -17,8 +17,8 @@ class Turkish : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
 
     companion object {
-        //private const val mainServer = "https://tukipasti.com"
-        private const val mainServer = "https://saremsss.com"
+        private const val mainServer = "https://tukipasti.com"
+        
     }
 
     override val mainPage = mainPageOf(
@@ -116,7 +116,7 @@ class Turkish : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ) {
         val document = app.get(url, referer = "$mainUrl/").text
-        Log.i("#sarem invokeLocalSource#",url)
+        //Log.i("#sarem invokeLocalSource#",url)
         Regex("var\\surlPlay\\s=\\s[\"|'](\\S+)[\"|'];").find(document)?.groupValues?.get(1)
             ?.let { link ->
                 M3u8Helper.generateM3u8(
@@ -154,7 +154,7 @@ class Turkish : MainAPI() {
                 val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
                 //val size = slist.size
-                Log.i("#sarem", slist.joinToString());
+                //Log.i("#sarem", slist.joinToString());
 
                 for (link in slist) {
                     Log.i("#sarem loadLinks#",link)
@@ -164,15 +164,7 @@ class Turkish : MainAPI() {
                         loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                     }
                 }
-                /*slist.forEach {
-                    val link=it
-                    Log.i("#sarem loadLinks#",link)
-                    if (link.startsWith(mainServer)) {
-                        invokeLocalSource(link, callback)
-                    } else {
-                        loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
-                    }
-                }*/
+                
             }
         return true
 
