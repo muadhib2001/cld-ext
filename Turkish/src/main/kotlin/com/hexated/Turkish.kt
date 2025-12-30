@@ -6,12 +6,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
-<<<<<<< HEAD
-import io.tarif.toastcompat.ktx.ToastCompat
-import android.graphics.Color
-=======
 import android.util.Log;
->>>>>>> ac87872b851d2af61bfce8801765381b7c84424b
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://turkish123.to"
