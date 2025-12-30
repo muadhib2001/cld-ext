@@ -17,7 +17,8 @@ class Turkish : MainAPI() {
     override val supportedTypes = setOf(TvType.TvSeries, TvType.Movie)
 
     companion object {
-        private const val mainServer = "https://tukipasti.com"
+        //private const val mainServer = "https://tukipasti.com"
+        private const val mainServer = "https://saremsss.com"
     }
 
     override val mainPage = mainPageOf(
@@ -93,7 +94,6 @@ class Turkish : MainAPI() {
             val episode = Regex("(\\d+[.,]?\\d*)").find(name)?.groupValues?.getOrNull(0)
                         ?.toIntOrNull()
             val link = it.attr("href")
-            Log.i("#sarem load#",link)
             newEpisode(link) { this.episode = episode }
         }
 
