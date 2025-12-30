@@ -6,7 +6,12 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
+<<<<<<< HEAD
+import io.tarif.toastcompat.ktx.ToastCompat
+import android.graphics.Color
+=======
 import android.util.Log;
+>>>>>>> ac87872b851d2af61bfce8801765381b7c84424b
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://turkish123.to"
@@ -149,9 +154,9 @@ class Turkish : MainAPI() {
         document.select(".movieplay").amap { e ->
                 val html=e.outerHtml()
                 
-                Log.i("#sarem", html);
+                //Log.i("#sarem", html);
                 //val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues }.toList()
                 val size = slist.size
                 Log.i("#sarem222222#",slist.joinToString())
                 slist.forEach {
