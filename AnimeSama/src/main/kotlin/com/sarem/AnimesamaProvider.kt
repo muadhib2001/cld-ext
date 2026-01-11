@@ -26,7 +26,7 @@ import org.jsoup.nodes.Element
 
 class AnimesamaProvider : MainAPI() {
 
-    override var mainUrl = "https://anime-sama.tv"
+    override var mainUrl = "https://anime-sama.si"
     override var name = "Anime-sama"
     override val supportedTypes = setOf(
         TvType.Anime,
