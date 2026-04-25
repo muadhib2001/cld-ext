@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element
 import android.util.Log;
 
 class Turkish : MainAPI() {
-    override var mainUrl = "https://turkish123.to"
+    override var mainUrl = "https://ahs.turkish123.com"
     override var name = "Turkish123"
     override val hasMainPage = true
     override var lang = "tr"
