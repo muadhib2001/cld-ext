@@ -25,7 +25,7 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
 
 
-class AnimeSamaProvider : MainAPI() {
+class AnimesamaProvider : MainAPI() {
     override var mainUrl = "https://anime-sama.to"
     override var name = "Anime Sama"
     override val supportedTypes = setOf(
