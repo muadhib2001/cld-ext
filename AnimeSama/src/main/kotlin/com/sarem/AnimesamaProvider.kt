@@ -274,7 +274,5 @@ class AnimesamaProvider : MainAPI() {
     }
 }
 
-    }
-}
 
 
