@@ -32,7 +32,7 @@
 ##
 
 # 🕹 Libraries:
-https://raw.githubusercontent.com/muadhib2001/cld-ext/refs/heads/builds/plugins.json
+https://raw.githubusercontent.com/muadhib2001/cld-ext/refs/heads/master/repo.json
 <a href="https://github.com/AmineSoukara/Py-EgyBest-Api"><img src="https://img.shields.io/badge/Kotlin-8000FF?style=flat&logo=github&logoColor=white?logoWidth=100"></a>
 
 ##
