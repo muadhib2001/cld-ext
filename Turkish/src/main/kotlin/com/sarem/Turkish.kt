@@ -94,6 +94,10 @@ class Turkish : MainAPI() {
             val episode = Regex("(\\d+[.,]?\\d*)").find(name)?.groupValues?.getOrNull(0)
                         ?.toIntOrNull()
             val link = it.attr("href")
+            if (!link.endsWith("/")) 
+                link=link+"/"
+            link=link+"#tab1"
+            
             newEpisode(link) { this.episode = episode }
         }
 
