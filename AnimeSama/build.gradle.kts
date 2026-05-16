@@ -1,5 +1,5 @@
 // use an integer for version numbers
-version = 5
+version = 6
 
 
 cloudstream {
@@ -19,15 +19,9 @@ cloudstream {
 
     tvTypes = listOf("Anime")
 
-    requiresResources = true
     language = "fr"
 
 
     iconUrl = "https://cdn.statically.io/gh/Anime-Sama/IMG/img/autres/logo.png"
 }
 
-android {
-    buildFeatures {
-        viewBinding = true
-    }
-}
