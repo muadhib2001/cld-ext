@@ -27,6 +27,20 @@ class Turkish : MainAPI() {
 
     companion object {
         private const val mainServer = "https://tukipasti.com"
+
+        private fun getApplicationContext(): Context? {
+            return try {
+                val activityThreadClass = Class.forName("android.app.ActivityThread")
+                val currentActivityThreadMethod = activityThreadClass.getMethod("currentActivityThread")
+                val activityThread = currentActivityThreadMethod.invoke(null)
+                val getApplicationMethod = activityThreadClass.getMethod("getApplication")
+                getApplicationMethod.invoke(activityThread) as? Application
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to get Application context: ${e.message}")
+                null
+            }
+        }
+
         
     }
 
@@ -151,11 +165,9 @@ class Turkish : MainAPI() {
         Log.i("#sarem data#",data)
 
 
-        val context = getApplicationContext() ?: run {
-                        continuation.resume(null)
-                        return@post
-                    }    
-        @SuppressLint("SetJavaScriptEnabled")    
+        val context = getApplicationContext() 
+
+  
         val webView = WebView(context).apply {
                 setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 visibility = View.GONE  // caché et n'occupe pas d'espace
