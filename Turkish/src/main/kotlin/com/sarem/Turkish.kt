@@ -192,7 +192,7 @@ class Turkish : MainAPI() {
                         loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                     }
                 }*/
-            Log.i("#sarem movieplay#",document.select(".movieplay"))
+            Log.i("#sarem movieplay#",document.select(".movieplay").first()?.html())
             document.select(".movieplay").amap { e ->
                     val html=e.outerHtml()
                     
