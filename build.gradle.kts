@@ -120,8 +120,8 @@ subprojects {
         implementation("com.google.code.gson:gson:2.14.0")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
         implementation("org.bouncycastle:bcpkix-jdk18on:1.84")
-        implementation("org.seleniumhq.selenium:selenium-java:4.18.1")
-        implementation("io.github.bonigarcia:webdrivermanager:5.8.0")
+        implementation("androidx.core:core-ktx:1.12.0")
+        implementation("androidx.appcompat:appcompat:1.6.1")
 
 
     }

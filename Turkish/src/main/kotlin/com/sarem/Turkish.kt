@@ -8,13 +8,11 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import android.util.Log;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import android.os.Bundle
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 
 
 class Turkish : MainAPI() {
@@ -149,73 +147,95 @@ class Turkish : MainAPI() {
     ): Boolean {
 
         Log.i("#sarem data#",data)
-        WebDriverManager.chromedriver().setup()
 
-        val options = ChromeOptions().apply {
-            addArguments("--headless")          // sans fenêtre visible
-            addArguments("--no-sandbox")
-            addArguments("--disable-dev-shm-usage")
-        }
 
-        val driver = ChromeDriver(options)
-        val wait = WebDriverWait(driver, Duration.ofSeconds(10))
 
-        try {
-            // 1. Naviguer vers la page
             
-            driver.get(data)
+        webView = WebView(this).apply {
+                visibility = View.GONE  // caché et n'occupe pas d'espace
+                settings.javaScriptEnabled = true
 
-            // 2. Attendre que le lien soit cliquable
-            val lien = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='#tab1']"))
-            )
+                webViewClient = object : WebViewClient() {
 
-            // 3. Cliquer
-            lien.click()
-
-            // 4. Attendre la nouvelle page et récupérer le contenu
-            wait.until(ExpectedConditions.titleContains("IANA"))
-            println("Titre de la page : ${driver.title}")
-            println("URL actuelle : ${driver.currentUrl}")
-
-        
-            //val document = app.get(data).document
-            val html = driver.pageSource
-            val document = Jsoup.parse(html)
-            /*val document = app.get(data).text
-
-            Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
-                .toList().apmap { link ->
-                    if (link.startsWith(mainServer)) {
-                        invokeLocalSource(link, callback)
-                    } else {
-                        loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                    // Intercepte chaque navigation
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView?,
+                        request: WebResourceRequest?
+                    ): Boolean {
+                        // Laisse la WebView charger la page normalement
+                        return false
                     }
-                }*/
-            Log.i("#sarem movieplay#",document.select(".movieplay").first()?.html() ?: "")
-            document.select(".movieplay").amap { e ->
-                    val html=e.outerHtml()
-                    
-                    //Log.i("#sarem", html);
-                    val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                    //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                    //val size = slist.size
-                    //Log.i("#sarem", slist.joinToString());
 
-                    for (link in slist) {
-                        Log.i("#sarem loadLinks#",link)
-                        if (link.startsWith(mainServer)) {
-                            invokeLocalSource(link, callback)
-                        } else {
-                            loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                    // Appelé quand la page est entièrement chargée
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        super.onPageFinished(view, url)
+
+                        // Récupère le HTML complet après rendu JS
+                        view?.evaluateJavascript(
+                            "(function() { return document.documentElement.outerHTML; })();"
+                        ) { html ->
+                            // html arrive avec des escapes JSON, on nettoie
+                            val cleanHtml = html
+                                ?.removeSurrounding("\"")
+                                ?.replace("\\u003C", "<")
+                                ?.replace("\\\"", "\"")
+                                ?.replace("\\n", "\n")
+                                ?: return@evaluateJavascript
+
+                            val document = Jsoup.parse(cleanHtml)
+                            var found=false
+
+                            val iframe = document.select("div.moivieplay iframe[src]").firstOrNull()
+
+                            if (iframe != null) {
+                                val src = iframe.attr("src")
+                                 if (src != null) {
+                                    found=src.contains(String2)
+                                 }
+                            } 
+
+
+                            // Selon la page chargée, on fait un traitement différent
+                            when {
+                                found == true -> {
+                                    Log.i("#sarem movieplay#",document.select(".movieplay").first()?.html() ?: "")
+                                    document.select(".movieplay").amap { e ->
+                                            val html=e.outerHtml()
+                                            
+                                            //Log.i("#sarem", html);
+                                            val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                                            //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                                            //val size = slist.size
+                                            //Log.i("#sarem", slist.joinToString());
+
+                                            for (link in slist) {
+                                                Log.i("#sarem loadLinks#",link)
+                                                if (link.startsWith(mainServer)) {
+                                                    invokeLocalSource(link, callback)
+                                                } else {
+                                                    loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                                                }
+                                            }
+                                            
+                                        }
+                                }
+                                found == false -> {
+                                    view.evaluateJavascript("document.querySelector('.player_nav a[href="#tab1"]').click();",null)
+                                }
+                            }
                         }
                     }
-                    
                 }
-        } finally {
-            driver.quit()
-        
-        }        
+
+                // Charge la page initiale
+                loadUrl(data)
+            }
+
+            // Ajoute-le quand même au layout, sinon il ne charge rien
+            val layout = FrameLayout(this)
+            layout.addView(webView)
+            setContentView(layout)
+            
         return true
 
     }
