@@ -162,6 +162,7 @@ class Turkish : MainAPI() {
 
         try {
             // 1. Naviguer vers la page
+            Log.i("#sarem data#",data)
             driver.get(data)
 
             // 2. Attendre que le lien soit cliquable
@@ -191,7 +192,7 @@ class Turkish : MainAPI() {
                         loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                     }
                 }*/
-
+            Log.i("#sarem movieplay#",document.select(".movieplay"))
             document.select(".movieplay").amap { e ->
                     val html=e.outerHtml()
                     
