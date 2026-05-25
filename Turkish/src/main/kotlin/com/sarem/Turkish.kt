@@ -13,6 +13,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.view.View
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -150,12 +151,20 @@ class Turkish : MainAPI() {
         Log.i("#sarem data#",data)
 
 
-
-            
-        val webView = WebView(this).apply {
+        val context = getApplicationContext() ?: run {
+                        continuation.resume(null)
+                        return@post
+                    }    
+        @SuppressLint("SetJavaScriptEnabled")    
+        val webView = WebView(context).apply {
+                setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 visibility = View.GONE  // caché et n'occupe pas d'espace
                 settings.javaScriptEnabled = true
-
+                settings.domStorageEnabled = true
+                settings.databaseEnabled = true
+                settings.javaScriptCanOpenWindowsAutomatically = true
+                settings.mediaPlaybackRequiresUserGesture = false
+                settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
                 webViewClient = object : WebViewClient() {
 
                     // Intercepte chaque navigation
@@ -221,7 +230,7 @@ class Turkish : MainAPI() {
                                         }
                                 }
                                 found == false -> {
-                                    view.evaluateJavascript("document.querySelector('.player_nav a[href="#tab1"]').click();",null)
+                                    view.evaluateJavascript("document.querySelector('.player_nav a[href=\"#tab1\"]').click();",null)
                                 }
                             }
                         }
@@ -232,10 +241,6 @@ class Turkish : MainAPI() {
                 loadUrl(data)
             }
 
-            // Ajoute-le quand même au layout, sinon il ne charge rien
-            val layout = FrameLayout(this)
-            layout.addView(webView)
-            setContentView(layout)
             
         return true
 
