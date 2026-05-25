@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import android.util.Log;
 import android.os.Bundle
+import android.app.Application
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -36,7 +37,7 @@ class Turkish : MainAPI() {
                 val getApplicationMethod = activityThreadClass.getMethod("getApplication")
                 getApplicationMethod.invoke(activityThread) as? Application
             } catch (e: Exception) {
-                Log.e(TAG, "Failed to get Application context: ${e.message}")
+                Log.e(name, "Failed to get Application context: ${e.message}")
                 null
             }
         }
@@ -165,10 +166,10 @@ class Turkish : MainAPI() {
         Log.i("#sarem data#",data)
 
 
-        val context = getApplicationContext() 
+        val context = getApplicationContext() ?: null
 
-  
-        val webView = WebView(context).apply {
+        if (context != null){
+            val webView = WebView(context).apply {
                 setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 visibility = View.GONE  // caché et n'occupe pas d'espace
                 settings.javaScriptEnabled = true
@@ -251,9 +252,10 @@ class Turkish : MainAPI() {
 
                 // Charge la page initiale
                 loadUrl(data)
+                }
             }
 
-            
+        }    
         return true
 
     }
