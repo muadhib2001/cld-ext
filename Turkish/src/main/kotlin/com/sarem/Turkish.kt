@@ -148,69 +148,72 @@ class Turkish : MainAPI() {
     ): Boolean {
 
 
-         WebDriverManager.chromedriver().setup()
+        WebDriverManager.chromedriver().setup()
 
-    val options = ChromeOptions().apply {
-        addArguments("--headless")          // sans fenêtre visible
-        addArguments("--no-sandbox")
-        addArguments("--disable-dev-shm-usage")
-    }
+        val options = ChromeOptions().apply {
+            addArguments("--headless")          // sans fenêtre visible
+            addArguments("--no-sandbox")
+            addArguments("--disable-dev-shm-usage")
+        }
 
-    val driver = ChromeDriver(options)
-    val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+        val driver = ChromeDriver(options)
+        val wait = WebDriverWait(driver, Duration.ofSeconds(10))
 
-    try {
-        // 1. Naviguer vers la page
-        driver.get("https://example.com")
+        try {
+            // 1. Naviguer vers la page
+            driver.get(data)
 
-        // 2. Attendre que le lien soit cliquable
-        val lien = wait.until(
-            ExpectedConditions.elementToBeClickable(By.linkText("More information..."))
-        )
+            // 2. Attendre que le lien soit cliquable
+            val lien = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='#tab1']"))
+            )
 
-        // 3. Cliquer
-        lien.click()
+            // 3. Cliquer
+            lien.click()
 
-        // 4. Attendre la nouvelle page et récupérer le contenu
-        wait.until(ExpectedConditions.titleContains("IANA"))
-        println("Titre de la page : ${driver.title}")
-        println("URL actuelle : ${driver.currentUrl}")
+            // 4. Attendre la nouvelle page et récupérer le contenu
+            wait.until(ExpectedConditions.titleContains("IANA"))
+            println("Titre de la page : ${driver.title}")
+            println("URL actuelle : ${driver.currentUrl}")
 
-    } finally {
-        driver.quit()
-    
-    }
-         val document = app.get(data).document
-        /*val document = app.get(data).text
+        
+            //val document = app.get(data).document
+            val html = driver.pageSource
+            val document = Jsoup.parse(html)
+            /*val document = app.get(data).text
 
-        Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
-            .toList().apmap { link ->
-                if (link.startsWith(mainServer)) {
-                    invokeLocalSource(link, callback)
-                } else {
-                    loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
-                }
-            }*/
-
-        document.select(".movieplay").amap { e ->
-                val html=e.outerHtml()
-                
-                //Log.i("#sarem", html);
-                val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
-                //val size = slist.size
-                //Log.i("#sarem", slist.joinToString());
-
-                for (link in slist) {
-                    Log.i("#sarem loadLinks#",link)
+            Regex("<iframe.*src=[\"|'](\\S+)[\"|']\\s").findAll(document).map { it.groupValues[1] }
+                .toList().apmap { link ->
                     if (link.startsWith(mainServer)) {
                         invokeLocalSource(link, callback)
                     } else {
                         loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
                     }
+                }*/
+
+            document.select(".movieplay").amap { e ->
+                    val html=e.outerHtml()
+                    
+                    //Log.i("#sarem", html);
+                    val slist=Regex("<iframe.*src=[\"|'](https[^\"]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                    //val slist=Regex("[^=]*src=[\"|']([^=]*)[\"|']").findAll(html).map { it.groupValues[1] }.toList()
+                    //val size = slist.size
+                    //Log.i("#sarem", slist.joinToString());
+
+                    for (link in slist) {
+                        Log.i("#sarem loadLinks#",link)
+                        if (link.startsWith(mainServer)) {
+                            invokeLocalSource(link, callback)
+                        } else {
+                            loadExtractor(link, "$mainUrl/", subtitleCallback, callback)
+                        }
+                    }
+                    
                 }
-                
-            }
+        } finally {
+            driver.quit()
+        
+        }        
         return true
 
     }
