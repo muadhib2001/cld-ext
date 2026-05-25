@@ -37,7 +37,7 @@ class Turkish : MainAPI() {
                 val getApplicationMethod = activityThreadClass.getMethod("getApplication")
                 getApplicationMethod.invoke(activityThread) as? Application
             } catch (e: Exception) {
-                Log.e(name, "Failed to get Application context: ${e.message}")
+                Log.e("Turkish123", "Failed to get Application context: ${e.message}")
                 null
             }
         }
@@ -252,10 +252,10 @@ class Turkish : MainAPI() {
 
                 // Charge la page initiale
                 loadUrl(data)
-                }
             }
+        }
 
-        }    
+            
         return true
 
     }
