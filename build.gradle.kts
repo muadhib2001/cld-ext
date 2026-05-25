@@ -18,6 +18,8 @@ buildscript {
         classpath("com.android.tools.build:gradle:9.1.1")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.21")
+        classpath("org.seleniumhq.selenium:selenium-java:4.18.1")
+        classpath("io.github.bonigarcia:webdrivermanager:5.8.0")
     }
 }
 
