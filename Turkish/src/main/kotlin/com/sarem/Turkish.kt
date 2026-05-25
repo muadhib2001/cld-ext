@@ -148,7 +148,7 @@ class Turkish : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
 
-
+        Log.i("#sarem data#",data)
         WebDriverManager.chromedriver().setup()
 
         val options = ChromeOptions().apply {
@@ -162,7 +162,7 @@ class Turkish : MainAPI() {
 
         try {
             // 1. Naviguer vers la page
-            Log.i("#sarem data#",data)
+            
             driver.get(data)
 
             // 2. Attendre que le lien soit cliquable
