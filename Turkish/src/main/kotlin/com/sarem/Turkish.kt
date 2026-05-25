@@ -7,6 +7,14 @@ import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
 import android.util.Log;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
 
 class Turkish : MainAPI() {
     override var mainUrl = "https://ahs.turkish123.com"
@@ -139,6 +147,39 @@ class Turkish : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
 
+
+         WebDriverManager.chromedriver().setup()
+
+    val options = ChromeOptions().apply {
+        addArguments("--headless")          // sans fenêtre visible
+        addArguments("--no-sandbox")
+        addArguments("--disable-dev-shm-usage")
+    }
+
+    val driver = ChromeDriver(options)
+    val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+
+    try {
+        // 1. Naviguer vers la page
+        driver.get("https://example.com")
+
+        // 2. Attendre que le lien soit cliquable
+        val lien = wait.until(
+            ExpectedConditions.elementToBeClickable(By.linkText("More information..."))
+        )
+
+        // 3. Cliquer
+        lien.click()
+
+        // 4. Attendre la nouvelle page et récupérer le contenu
+        wait.until(ExpectedConditions.titleContains("IANA"))
+        println("Titre de la page : ${driver.title}")
+        println("URL actuelle : ${driver.currentUrl}")
+
+    } finally {
+        driver.quit()
+    
+    }
          val document = app.get(data).document
         /*val document = app.get(data).text
 
