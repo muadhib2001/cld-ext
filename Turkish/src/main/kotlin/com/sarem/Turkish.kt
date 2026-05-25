@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -151,7 +152,7 @@ class Turkish : MainAPI() {
 
 
             
-        webView = WebView(this).apply {
+        val webView = WebView(this).apply {
                 visibility = View.GONE  // caché et n'occupe pas d'espace
                 settings.javaScriptEnabled = true
 
@@ -190,7 +191,7 @@ class Turkish : MainAPI() {
                             if (iframe != null) {
                                 val src = iframe.attr("src")
                                  if (src != null) {
-                                    found=src.contains(String2)
+                                    found=src.contains(mainServer)
                                  }
                             } 
 
