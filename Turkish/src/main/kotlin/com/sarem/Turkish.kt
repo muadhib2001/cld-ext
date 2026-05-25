@@ -6,6 +6,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.nodes.Element
+import org.jsoup.Jsoup
 import android.util.Log;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -101,10 +102,10 @@ class Turkish : MainAPI() {
             val name = it.text().trim()
             val episode = Regex("(\\d+[.,]?\\d*)").find(name)?.groupValues?.getOrNull(0)
                         ?.toIntOrNull()
-            val link = it.attr("href")
-            if (!link.endsWith("/")) 
-                link=link+"/"
-            link=link+"#tab1"
+            
+            val raw = it.attr("href")
+            val link = "${if (raw.endsWith("/")) raw else "$raw/"}#tab1"
+
             
             newEpisode(link) { this.episode = episode }
         }
